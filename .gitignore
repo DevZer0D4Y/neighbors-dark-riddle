@@ -1,0 +1,16 @@
+# game data generated from the APK - never commit or redistribute it
+*.apk
+tools/merged/
+game/romfs/*.pak
+# build output
+game/build/
+game/*.elf
+game/*.nro
+game/*.nacp
+game/*.map
+game/darkriddle_linux
+dist_windows/
+# runtime files
+*.sav
+*.cfg
+__pycache__/

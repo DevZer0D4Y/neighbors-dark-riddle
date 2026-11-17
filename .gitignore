@@ -2,6 +2,8 @@
 *.apk
 tools/merged/
 game/romfs/*.pak
+game/icon.jpg
+game/icon.ico
 # build output
 game/build/
 game/*.elf
@@ -9,6 +11,7 @@ game/*.nro
 game/*.nacp
 game/*.map
 game/darkriddle_linux
+game/NeighborsDarkRiddle*
 dist_windows/
 # runtime files
 *.sav

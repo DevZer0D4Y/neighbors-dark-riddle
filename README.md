@@ -1,7 +1,9 @@
-# Dark Riddle — Native Port for Nintendo Switch, Windows & Linux
+# Neighbor's Dark Riddle
 
-A from-scratch native C++ port of the Android Unity game **Dark Riddle**, made to look and play
-like the original on **Nintendo Switch (homebrew)**, **Windows** and **Linux**.
+**A native port of Dark Riddle for Nintendo Switch, Windows and Linux.**
+
+*Neighbor's Dark Riddle* is a from-scratch native C++ port of the Android Unity game **Dark Riddle**,
+made to look and play like the original on **Nintendo Switch (homebrew)**, **Windows** and **Linux**.
 
 The port does not emulate Unity. It reimplements the game's logic in C++ and runs the original
 levels, models, textures, animations, sounds and UI. You convert those from **your own copy of
@@ -49,7 +51,7 @@ game/
   src/            engine and game (C++17, SDL2, OpenGL ES 2)
   Makefile        Nintendo Switch build (devkitPro)
   romfs/          generated game data goes here (empty in the repository)
-tools/            Python tools: APK  ->  game/romfs/*.pak
+tools/            Python tools: APK  ->  game/romfs/*.pak and the app icon
 build_switch.sh   build_windows.sh   build_linux.sh
 ```
 
@@ -62,7 +64,7 @@ Requires Python 3.10 or newer.
 ```bash
 cd tools
 pip install -r requirements.txt
-python extract_apk.py path/to/darkriddle.apk     # unpacks the Unity data into tools/merged/
+python extract_apk.py path/to/darkriddle.apk     # unpacks the Unity data and the icon into tools/merged/
 ./make_all_data.sh                                # or make_all_data.bat on Windows
 ```
 
@@ -76,6 +78,9 @@ This writes the files the game loads into `game/romfs/`:
 | `nav.pak` | the levels' NavMesh |
 | `trees.pak` | animated trees |
 
+It also makes the app icon from the game's own launcher icon: `game/icon.jpg` for the Switch
+and `game/icon.ico` for Windows.
+
 Converting the levels takes a few minutes.
 
 ### 2. Build
@@ -84,10 +89,11 @@ Converting the levels takes a few minutes.
 `switch-dev switch-sdl2 switch-mesa`, then run:
 
 ```bash
-./build_switch.sh            # -> game/darkriddle.nro
+./build_switch.sh            # -> game/NeighborsDarkRiddle.nro
 ```
 
-Copy `darkriddle.nro` to `/switch/` on the SD card and start it from the Homebrew Menu.
+Copy `NeighborsDarkRiddle.nro` to `/switch/` on the SD card and start *Neighbor's Dark Riddle*
+from the Homebrew Menu.
 
 **Windows.** The Windows version is cross-compiled from Linux or WSL with
 [llvm-mingw](https://github.com/mstorsjo/llvm-mingw) and the
@@ -96,11 +102,11 @@ Copy `darkriddle.nro` to `/switch/` on the SD card and start it from the Homebre
 ```bash
 LLVM_MINGW=/path/to/llvm-mingw \
 SDL2_MINGW=/path/to/SDL2-2.x/x86_64-w64-mingw32 \
-./build_windows.sh           # -> dist_windows/DarkRiddle/
+./build_windows.sh           # -> dist_windows/NeighborsDarkRiddle/
 ```
 
-Keep the `DarkRiddle` folder together: it holds the exe, the SDL2 and C++ runtime DLLs and
-`romfs/`.
+Keep the `NeighborsDarkRiddle` folder together: it holds `NeighborsDarkRiddle.exe` (with the app
+icon), the SDL2 and C++ runtime DLLs and `romfs/`.
 
 **Linux:**
 
@@ -151,7 +157,7 @@ Two alternative schemes are built in: **Classic** (E to use, Q to throw) and
 
 ## Disclaimer
 
-This is an unofficial fan project. It is not affiliated with, endorsed by or connected to the
+*Neighbor's Dark Riddle* is an unofficial fan project. It is not affiliated with, endorsed by or connected to the
 developers or publishers of Dark Riddle. *Dark Riddle* and all related names, characters and
 assets belong to their respective owners. No copyrighted game content is distributed here. Use
 this project only with a copy of the game you legally own.

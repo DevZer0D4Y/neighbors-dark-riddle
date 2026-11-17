@@ -3,8 +3,8 @@
 Usage:  python extract_apk.py path/to/darkriddle.apk
 
 Writes tools/merged/: the APK's assets/bin/Data folder with Unity's split files
-(levelN.split0, levelN.split1, ...) joined back into levelN. All other tools read
-their input from this folder.
+(levelN.split0, levelN.split1, ...) joined back into levelN, and the launcher icon
+(app_icon.png). All other tools read their input from this folder.
 """
 import os, re, sys, zipfile
 
@@ -29,6 +29,13 @@ with zipfile.ZipFile(sys.argv[1]) as z:
         m = re.match(r'(.+)\.split(\d+)$', rel)
         if m:
             splits.setdefault(m.group(1), []).append((int(m.group(2)), dst))
+    # the launcher icon (largest density) for make_icon.py
+    icons = [n for n in z.namelist() if re.match(r'res/(drawable|mipmap)-[a-z]+(-v\d+)?/app_icon\.png$', n)]
+    order = ['xxxhdpi', 'xxhdpi', 'xhdpi', 'hdpi', 'mdpi', 'ldpi']
+    icons.sort(key=lambda n: next((i for i, d in enumerate(order) if '-' + d in n), 99))
+    if icons:
+        with z.open(icons[0]) as src, open(os.path.join(out, 'app_icon.png'), 'wb') as f:
+            f.write(src.read())
 for base, parts in splits.items():
     with open(os.path.join(out, *base.split('/')), 'wb') as f:
         for _, p in sorted(parts):

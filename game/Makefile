@@ -2,7 +2,7 @@
 DEVKITPRO ?= /opt/devkitpro
 CXX       := aarch64-none-elf-g++
 CC        := aarch64-none-elf-gcc
-TARGET    := darkriddle
+TARGET    := NeighborsDarkRiddle
 BUILD     := build
 SRC       := src
 CPPFILES  := $(wildcard $(SRC)/*.cpp)
@@ -23,10 +23,13 @@ $(TARGET).elf: $(OFILES)
 	$(CXX) $(LDFLAGS) $(OFILES) $(LIBDIRS) $(LIBS) -o $@
 
 $(TARGET).nacp: Makefile
-	nacptool --create "Dark Riddle" "Switch port" "1.0.0" $@
+	nacptool --create "Neighbor's Dark Riddle" "DevZer0D4Y" "1.0.0" $@
 
-$(TARGET).nro: $(TARGET).elf $(TARGET).nacp $(wildcard romfs/*)
-	elf2nro $< $@ --nacp=$(TARGET).nacp --romfsdir=$(CURDIR)/romfs
+# icon.jpg (256x256): tools/make_icon.py
+ICONFLAG  := $(if $(wildcard icon.jpg),--icon=$(CURDIR)/icon.jpg,)
+
+$(TARGET).nro: $(TARGET).elf $(TARGET).nacp $(wildcard romfs/*) $(wildcard icon.jpg)
+	elf2nro $< $@ --nacp=$(TARGET).nacp --romfsdir=$(CURDIR)/romfs $(ICONFLAG)
 
 all: $(TARGET).nro
 

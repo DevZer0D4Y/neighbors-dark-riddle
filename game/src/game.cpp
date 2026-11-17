@@ -2441,12 +2441,14 @@ int main(int argc, char** argv) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);   // thin walls 50+ m away z-fight on 16 bits
-    SDL_Window* win = SDL_CreateWindow("Dark Riddle", 0, 0, 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
+    SDL_Window* win = SDL_CreateWindow("Neighbor's Dark Riddle", 0, 0, 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
 #else
 #ifdef _WIN32
     // the game's files (romfs/, saves, controls) sit next to the exe
     if (char* bp = SDL_GetBasePath()) { SetCurrentDirectoryA(bp); SDL_free(bp); }
     SDL_SetHint(SDL_HINT_OPENGL_ES_DRIVER, "0");   // the driver's own OpenGL ES 2 (WGL)
+    SDL_SetHint(SDL_HINT_WINDOWS_INTRESOURCE_ICON, "1");         // window / taskbar icon:
+    SDL_SetHint(SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL, "1");   // the exe's icon resource 1
 #endif
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
@@ -2454,7 +2456,7 @@ int main(int argc, char** argv) {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);   // thin walls 50+ m away z-fight on 16 bits
     const Uint32 winFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
-    SDL_Window* win = SDL_CreateWindow("Dark Riddle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, winFlags);
+    SDL_Window* win = SDL_CreateWindow("Neighbor's Dark Riddle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, winFlags);
 #endif
     if (!win) { printf("no window: %s\n", SDL_GetError()); return 1; }
     SDL_GLContext ctx = SDL_GL_CreateContext(win);
@@ -2468,21 +2470,21 @@ int main(int argc, char** argv) {
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
         SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-        win = SDL_CreateWindow("Dark Riddle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, winFlags);
+        win = SDL_CreateWindow("Neighbor's Dark Riddle", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, winFlags);
         ctx = win ? SDL_GL_CreateContext(win) : nullptr;
     }
 #endif
     if (!ctx) {
         printf("no GL: %s\n", SDL_GetError());
 #ifdef _WIN32
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Dark Riddle", "Could not create an OpenGL context.\nPlease update your graphics driver.", nullptr);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Neighbor's Dark Riddle", "Could not create an OpenGL context.\nPlease update your graphics driver.", nullptr);
 #endif
         return 1;
     }
     if (!drGLLoad()) {
         printf("[gl] missing OpenGL functions\n");
 #ifdef _WIN32
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Dark Riddle", "Your OpenGL driver is missing required functions.\nPlease update your graphics driver.", nullptr);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Neighbor's Dark Riddle", "Your OpenGL driver is missing required functions.\nPlease update your graphics driver.", nullptr);
 #endif
         return 1;
     }

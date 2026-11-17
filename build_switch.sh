@@ -7,4 +7,4 @@ export DEVKITPRO="${DEVKITPRO:-/opt/devkitpro}"
 export PATH="$DEVKITPRO/devkitA64/bin:$DEVKITPRO/tools/bin:$DEVKITPRO/portlibs/switch/bin:$PATH"
 cd "$(dirname "$0")/game"
 make -j"$(nproc)" all
-echo "built game/darkriddle.nro"
+echo "built game/NeighborsDarkRiddle.nro"
